@@ -7,7 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { BarbersModule } from './barbers/barbers.module';
 import { ServicesModule } from './services/services.module';
 import { AppointmentsModule } from './appointments/appointments.module';
-import { FeedbackModule } from './feedback/feedback.module';
+import { FeedbackModule } from './feedback/feedback.module' ;
 
 @Module({
   imports: [
