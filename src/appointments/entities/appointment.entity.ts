@@ -1,7 +1,11 @@
+import { Barber } from 'src/barbers/entities/barber.entity';
+import { Client } from 'src/clients/entities/client.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -19,11 +23,14 @@ export class Appointment {
   @PrimaryGeneratedColumn('uuid')
   id: string; 
 
-  @Column({ type: 'uuid' })
-  barber_id: string;
+  @ManyToOne(() => Barber, (barber) => barber.appointments, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'barber_id' })
+  barber: Barber;
 
-  @Column({ type: 'uuid', nullable: false })
-  client_id: string; 
+  @ManyToOne(() => Client , (client) => client.appointments, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'client_id' })
+  client: Client;
+
 
   @Column({ type: 'varchar', length: 100 })
   client_name: string;

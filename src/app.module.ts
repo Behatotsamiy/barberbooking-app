@@ -9,6 +9,9 @@ import { ServicesModule } from './services/services.module';
 import { AppointmentsModule } from './appointments/appointments.module';
 import { FeedbackModule } from './feedback/feedback.module' ;
 import { AuthModule } from './auth/auth.module';
+import { Barber } from './barbers/entities/barber.entity';
+import { Client } from './clients/entities/client.entity';
+import { Appointment } from './appointments/entities/appointment.entity';
 
 @Module({
   imports: [
@@ -40,6 +43,7 @@ import { AuthModule } from './auth/auth.module';
           password: configService.get('DB_PASSWORD'),
           database: configService.get('DB_NAME'),
           autoLoadEntities: true,
+          entities: [Barber, Client, Appointment],
           synchronize: true,
           logging: true,
           uuidExtension: 'pgcrypto',
