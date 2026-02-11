@@ -1,26 +1,58 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateBarberDto } from './dto/create-barber.dto';
 import { UpdateBarberDto } from './dto/update-barber.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Barber } from './entities/barber.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class BarbersService {
-  create(createBarberDto: CreateBarberDto) {
-    return 'This action adds a new barber';
+  constructor(
+    @InjectRepository(Barber)
+    private barbersRepository: Repository<Barber>,
+  ) {}
+  async createBarber(createBarberDto: CreateBarberDto): Promise<Barber> {
+    const existingUser = await this.barbersRepository.findOne({
+      where: { phone_number: createBarberDto.phone_number },
+    });
+    if (existingUser) {
+      throw new ConflictException('Phone number already in use');
+    }
+    const barber = this.barbersRepository.create(createBarberDto);
+    return this.barbersRepository.save(barber);
   }
 
   findAll() {
-    return `This action returns all barbers`;
+    const barbers = this.barbersRepository.find();
+    return barbers;
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} barber`;
+    const barber = this.barbersRepository.findOne({ where: { id } });
+    return barber;
   }
 
   update(id: number, updateBarberDto: UpdateBarberDto) {
-    return `This action updates a #${id} barber`;
+    const existingUser = this.barbersRepository.findOne({
+      where: { phone_number: updateBarberDto.phone_number },
+    });
+    if (!existingUser) {
+      throw new ConflictException('Phone number is not defined');
+    }
+    const barber = this.barbersRepository.findOne({ where: { id } });
+    this.barbersRepository.update(id, updateBarberDto);
+    return barber;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} barber`;
+    const existingUser = this.barbersRepository.findOne({
+      where: { id },
+    });
+    if (!existingUser) {
+      throw new ConflictException('Barber not found');
+    }
+    const barber = this.barbersRepository.findOne({ where: { id } });
+    this.barbersRepository.delete(id);
+    return { deleted: true, barber };
   }
 }

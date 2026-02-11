@@ -1,7 +1,9 @@
+import { Appointment } from 'src/appointments/entities/appointment.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -12,14 +14,14 @@ export class Barber {
   id: number;
 
   @Column({
-    type: 'string',
+    type: 'varchar',
     length: 255,
     nullable: false,
   })
   name: string;
 
   @Column({
-    type: 'string',
+    type: 'varchar',
     nullable: false,
     length: 7,
   })
@@ -34,17 +36,20 @@ export class Barber {
   location: string;
 
   @Column({
-    type: 'string',
+    type: 'varchar',
     length: 255,
     comment: 'Barber bio',
   })
   bio: string;
 
   @Column({
-    type: 'string',
+    type: 'varchar',
     length: 255,
   })
   rating: string;
+
+  @OneToMany(() => Appointment, (appointment) => appointment.barber)
+  appointments: Appointment[];
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

@@ -1,7 +1,9 @@
+import { Appointment } from 'src/appointments/entities/appointment.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -43,6 +45,9 @@ export class Client {
     default: UserRole.CLIENT,
   })
   role: UserRole;
+
+  @OneToMany(() => Appointment, (appointment) => appointment.client)
+  appointments: Appointment[];
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
