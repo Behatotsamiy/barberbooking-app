@@ -8,6 +8,7 @@ import { BarbersModule } from './barbers/barbers.module';
 import { ServicesModule } from './services/services.module';
 import { AppointmentsModule } from './appointments/appointments.module';
 import { FeedbackModule } from './feedback/feedback.module' ;
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -54,7 +55,9 @@ import { FeedbackModule } from './feedback/feedback.module' ;
     
      AppointmentsModule,
     
-     FeedbackModule],
+     FeedbackModule,
+    
+     AuthModule],
   controllers: [AppController],
   providers: [AppService],
 
