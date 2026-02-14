@@ -28,7 +28,7 @@ export class ClientsService {
   }
 
   findOne(id: number) {
-    const client = this.clientsRepository.findOne({ where: { id } });
+    const client = this.clientsRepository.findOne({ where: { id: id.toString() } });
     return client;
   }
 
@@ -39,19 +39,19 @@ export class ClientsService {
     if (!existingUser) {
       throw new ConflictException('Phone number is not defined');
     }
-    const client = this.clientsRepository.findOne({ where: { id } });
+    const client = this.clientsRepository.findOne({ where: { id: id.toString() } });
     this.clientsRepository.update(id, updateClientDto);
     return client;
   }
 
   remove(id: number) {
     const existingUser = this.clientsRepository.findOne({
-      where: { id },
+      where: { id: id.toString() },
     });
     if (!existingUser) {
       throw new ConflictException('Client not found');
     }
-    const client = this.clientsRepository.findOne({ where: { id } });
+    const client = this.clientsRepository.findOne({ where: { id: id.toString() } });
     this.clientsRepository.delete(id);
     return { deleted: true, client };
   }

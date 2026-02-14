@@ -9,7 +9,7 @@ export class AppointmentsController {
 
   @Post()
   create(@Body() createAppointmentDto: CreateAppointmentDto) {
-    return this.appointmentsService.create(createAppointmentDto);
+    return this.appointmentsService.createAppointment(createAppointmentDto);
   }
 
   @Get()
@@ -24,7 +24,7 @@ export class AppointmentsController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAppointmentDto: UpdateAppointmentDto) {
-    return this.appointmentsService.update(+id, updateAppointmentDto);
+    return this.appointmentsService.updateAppointment(id, updateAppointmentDto);
   }
 
   @Delete(':id')

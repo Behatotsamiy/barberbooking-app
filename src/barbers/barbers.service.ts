@@ -28,7 +28,7 @@ export class BarbersService {
   }
 
   findOne(id: number) {
-    const barber = this.barbersRepository.findOne({ where: { id } });
+    const barber = this.barbersRepository.findOne({ where: { id: id.toString() } });
     return barber;
   }
 
@@ -39,19 +39,19 @@ export class BarbersService {
     if (!existingUser) {
       throw new ConflictException('Phone number is not defined');
     }
-    const barber = this.barbersRepository.findOne({ where: { id } });
+    const barber = this.barbersRepository.findOne({ where: { id: id.toString() } });
     this.barbersRepository.update(id, updateBarberDto);
     return barber;
   }
 
   remove(id: number) {
     const existingUser = this.barbersRepository.findOne({
-      where: { id },
+      where: { id: id.toString() },
     });
     if (!existingUser) {
       throw new ConflictException('Barber not found');
     }
-    const barber = this.barbersRepository.findOne({ where: { id } });
+    const barber = this.barbersRepository.findOne({ where: { id: id.toString() } });
     this.barbersRepository.delete(id);
     return { deleted: true, barber };
   }
