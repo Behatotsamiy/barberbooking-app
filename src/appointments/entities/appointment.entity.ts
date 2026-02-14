@@ -21,16 +21,21 @@ export enum AppointmentStatus {
 @Entity('appointments')
 export class Appointment {
   @PrimaryGeneratedColumn('uuid')
-  id: string; 
+  id: string;
 
-  @ManyToOne(() => Barber, (barber) => barber.appointments, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Barber, (barber) => barber.appointments, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'barber_id' })
-  barber: Barber;
+  barber_id: Barber;
 
-  @ManyToOne(() => Client , (client) => client.appointments, { onDelete: 'CASCADE' })
+
+  @ManyToOne(() => Client, (client) => client.appointments, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'client_id' })
-  client: Client;
-
+  client_id: Client;
+  
 
   @Column({ type: 'varchar', length: 100 })
   client_name: string;

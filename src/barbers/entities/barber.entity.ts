@@ -11,7 +11,7 @@ import {
 @Entity()
 export class Barber {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column({
     type: 'varchar',
@@ -48,7 +48,7 @@ export class Barber {
   })
   rating: string;
 
-  @OneToMany(() => Appointment, (appointment) => appointment.barber)
+  @OneToMany(() => Appointment, (appointment) => appointment.barber_id)
   appointments: Appointment[];
 
   @CreateDateColumn({ type: 'timestamp' })

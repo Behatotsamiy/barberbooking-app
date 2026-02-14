@@ -17,7 +17,7 @@ export enum UserRole {
 @Entity()
 export class Client {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column({
     type: 'varchar',
@@ -46,7 +46,7 @@ export class Client {
   })
   role: UserRole;
 
-  @OneToMany(() => Appointment, (appointment) => appointment.client)
+  @OneToMany(() => Appointment, (appointment) => appointment.client_id)
   appointments: Appointment[];
 
   @CreateDateColumn({ type: 'timestamp' })
