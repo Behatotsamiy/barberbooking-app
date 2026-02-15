@@ -1,4 +1,5 @@
 import { Appointment } from 'src/appointments/entities/appointment.entity';
+import { Feedback } from 'src/feedback/entities/feedback.entity';
 import {
   Column,
   CreateDateColumn,
@@ -48,6 +49,8 @@ export class Client {
 
   @OneToMany(() => Appointment, (appointment) => appointment.client_id)
   appointments: Appointment[];
+  @OneToMany(() => Feedback, (feedback) => feedback.client_id)
+  feedbacks: Feedback[];
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

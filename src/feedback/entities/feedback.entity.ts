@@ -1,8 +1,13 @@
 import { UUID } from 'crypto';
+import { Appointment } from 'src/appointments/entities/appointment.entity';
+import { Barber } from 'src/barbers/entities/barber.entity';
+import { Client } from 'src/clients/entities/client.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -12,20 +17,17 @@ export class Feedback {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({
-    type: 'uuid',
-  })
-  barber_id: string;
+  @ManyToOne(() => Barber, (barber) => barber.feedbacks, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'barber_id' })
+  barber_id: Barber;
 
-  @Column({
-    type: 'uuid',
-  })
-  client_id: string;
+  @ManyToOne(() => Client, (client) => client.feedbacks, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'client_id' })
+  client_id: Client;
 
-  @Column({
-    type: 'uuid',
-  })
-  appointment_id: string;
+ @ManyToOne(() => Appointment , { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'appointment_id' })
+  appointment_id: Appointment;
 
   @Column({
     type: 'text',
