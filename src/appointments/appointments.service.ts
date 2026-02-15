@@ -11,7 +11,6 @@ import { Appointment, AppointmentStatus } from './entities/appointment.entity';
 import { Not, Repository } from 'typeorm';
 import { Barber } from 'src/barbers/entities/barber.entity';
 import { Client } from 'src/clients/entities/client.entity';
-import { CreateBarberDto } from 'src/barbers/dto/create-barber.dto';
 
 @Injectable()
 export class AppointmentsService {
@@ -82,7 +81,7 @@ export class AppointmentsService {
     return appointments;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     const appointment = this.appointmentsRepository.findOne({
       where: { id: id.toString() },
       relations: ['barber_id', 'client_id'], // Загружаем связанные сущности
@@ -162,7 +161,7 @@ export class AppointmentsService {
     return await this.appointmentsRepository.save(appointment);
   }
 
-  remove(id: number) {
+  remove(id: string) {
     const existingAppointment = this.appointmentsRepository.findOne({
       where: { id: id.toString() },
     });

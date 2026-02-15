@@ -44,10 +44,21 @@ export class Barber {
   bio: string;
 
   @Column({
-    type: 'varchar',
-    length: 255,
+    type: 'decimal',
+    precision: 3,
+    scale: 2,
+    default: 0,
   })
-  rating: string;
+  rating: number;
+
+  @Column({default: 0})
+  reviewCount: number;
+
+  @Column()
+  picture: string;
+
+  @Column({  })
+  price: number;
 
   @OneToMany(() => Appointment, (appointment) => appointment.barber_id)
   appointments: Appointment[];
