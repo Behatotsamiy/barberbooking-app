@@ -1,4 +1,4 @@
-import { IsAlpha, IsNotEmpty, IsPhoneNumber, IsString } from "class-validator";
+import { IsAlpha, IsNotEmpty, IsNumber, IsPhoneNumber, IsString } from "class-validator";
 
 export class CreateClientDto {
     @IsString()
@@ -12,5 +12,11 @@ export class CreateClientDto {
     @IsNotEmpty()
     @IsPhoneNumber("UZ")
     client_phonenumber: string;
+    @IsString()
+    @IsNotEmpty()
+    photo: string;
+    @IsNumber()
+    @IsNotEmpty()
+    price: number;
 
 }
