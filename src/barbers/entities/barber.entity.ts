@@ -54,7 +54,10 @@ export class Barber {
   @Column({default: 0})
   reviewCount: number;
 
-  @Column()
+  @Column({
+    type:'text',
+    nullable: true,
+  })
   picture: string;
 
   @Column({  })
