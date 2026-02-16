@@ -11,14 +11,14 @@ export class BarbersService {
     @InjectRepository(Barber)
     private barbersRepository: Repository<Barber>,
   ) {}
-  async createBarber(createBarberDto: CreateBarberDto): Promise<Barber> {
+  async createBarber(createBarberDto: CreateBarberDto, imageUrl: string | null): Promise<Barber> {
     const existingUser = await this.barbersRepository.findOne({
       where: { phone_number: createBarberDto.phone_number },
     });
     if (existingUser) {
       throw new ConflictException('Phone number already in use');
     }
-    const barber = this.barbersRepository.create(createBarberDto);
+    const barber = this.barbersRepository.create({...createBarberDto, picture: imageUrl ? imageUrl : null });
     return this.barbersRepository.save(barber);
   }
 
