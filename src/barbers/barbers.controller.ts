@@ -17,7 +17,7 @@ import { UserRole } from 'src/clients/entities/client.entity';
 import { Roles, RolesGuard } from 'src/auth/guards/roles.guard';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { filesService } from 'src/files/file.service';
-import { FileInterceptor } from '@nestjs/platform-express';
+import {  FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('barbers')
 export class BarbersController {
@@ -27,14 +27,18 @@ export class BarbersController {
   ) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('picture'))
+  @UseInterceptors(FilesInterceptor('pictures', 10))
 
-  async create(@Body() createBarberDto: CreateBarberDto, @UploadedFile() file: Express.Multer.File) {
-    let imageUrl : string | null = null;
-      if (file) {
-      imageUrl = await this.filesService.uploadToImgBB(file);
-    }
-    return this.barbersService.createBarber(createBarberDto, imageUrl);
+  async create(@Body() createBarberDto: CreateBarberDto, @UploadedFile() files: Express.Multer.File[]) {
+    let imageUrls : string[] | null = [];
+if (files?.length) {
+    imageUrls = await Promise.all(
+      files.map((file) =>
+        this.filesService.uploadToImgBB(file),
+      ),
+    );
+  }
+    return this.barbersService.createBarber(createBarberDto, imageUrls ? imageUrls[0] : null);
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
