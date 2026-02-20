@@ -56,9 +56,10 @@ export class Barber {
 
   @Column({
     type:'text',
+    array: true,
     nullable: true,
   })
-  picture: string;
+  picture: string[];
 
   @Column({  })
   price: number;
